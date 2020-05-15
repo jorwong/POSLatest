@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">    
+
+    <title>Edit Menu Item</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/mdb/css/bootstrap.min.css" rel="stylesheet">
+   <link href="css/mdb/css/mdb.min.css" rel="stylesheet">
+
+    <!-- Your custom styles (optional) -->
+    <link href="css/mdb/css/style.css" rel="stylesheet">
+    <link href="css/mdb/css/style.min.css" rel="stylesheet" />
+    <!-- Modal Template -->
+    <link href="css/mdb/css/modals/bootstrap-fs-modal-master/dist/css/fs-modal.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-fadedpurple all-align-center">
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark py-0">
+
+    <!-- button for mobile -->
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapse_target">
+        <!-- nav branding -->
+        <a class="navbar-brand text-primary" href="home.html">Tink's Bistro</a>
+
+        <!-- nav links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pos.html">POS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">CRM</a>
+            </li>
+        </ul>
+
+        <!-- dropdown -->
+        <div class="dropdown">
+            <button type="button" class="btn py-2 px-3 btn-light dropdown-toggle" data-toggle="dropdown">
+              Settings
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="setup.html">Setup</a>
+              <a class="dropdown-item" href="profile.html">Profile</a>
+              <a class="dropdown-item" href="#">Tour</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" id="btnLogout">Logout</a>
+            </div>
+          </div>
+
+    </div>
+
+</nav>
+
+<!-- breadcrumb -->  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item small"><a href="home.html">home</a></li>
+      <li class="breadcrumb-item small"><a href="setup.html">Setup</a></li>
+      <li class="breadcrumb-item small"><a href="setup-menu.html">Menu</a></li>
+      <li class="breadcrumb-item small active" aria-current="page">Edit: food_item</li>
+    </ol>
+  </nav>
+
+<div class="px-4">
+
+<!-- "Menu" + 4 buttons -->
+<div class="row py-3 mx-auto">
+    <div class="col"><h3 class="text-success">Edit: food_item</h3></div>
+</div>
+
+<hr />
+
+    <!-- form starts here -->
+<form> 
+     
+    <!--- Item detail accordion -->
+    <div class="accordion mb-4" id="accordion_item">
+
+        <div class="card">
+            <div class="card-header pl-0 d-flex bg-666" id="headingOne">
+                <div class="mr-auto">
+                    <h5 class="mb-0">
+                    <button class="btn btn-link py-0" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <span class="text-white text-capitalize">Item Details</span>
+                    </button>
+                    </h5>
+                </div>
+                <div class="font-weight-bold">
+                    <button class="btn btn-link bg-transparent text-white font-weight-bold py-0 px-3" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <span class="text-white">+</span>
+                    </button>
+                </div>    
+            </div>
+        
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_item">
+                <div class="card-body row">
+                    
+                    <!-- left sidebar input fields -->
+                    <div class="col-7">
+                        <div class="form-group row">
+                            <label for="food_item" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="food_item">
+                            </div>
+                            </div>
+
+                            <div class="form-group row">
+                            <label for="food_item_code" class="col-sm-2 col-form-label">Item Code</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="food_item_code">
+                            </div>
+                            </div>
+
+
+                          <div class="form-group row">
+                            <label for="price" class="col-sm-2 col-form-label">Price</label>
+                            <div class="col-sm-10">
+                              <input type="number" class="form-control" id="price">                            
+                              <small id="passwordHelpInline" class="text-muted">
+                                All prices are in SGD
+                              </small>
+                            </div>
+                          </div>
+
+                          <fieldset class="form-group">
+                            <div class="row">
+                              <legend class="col-form-label col-sm-2 pt-0">Location Availability</legend>
+                              <div class="col-sm-10">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="location1">
+                                  <label class="form-check-label" for="location1">
+                                    Location 1
+                                  </label>
+                                  <br />
+                                  <input class="form-check-input" type="checkbox" id="location2">
+                                  <label class="form-check-label" for="location2">
+                                    Location 2
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </fieldset>
+
+                          
+                          <div class="form-group row">
+                            <label for="cattegory" class="col-sm-2 col-form-label">Cateogry</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select my-1 mr-sm-2" id="category">
+                                <option value="0" selected>Starters</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select>
+                            </div> 
+                        </div>
+
+
+                          
+                          <div class="form-group row">
+                            <label for="description" class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="description" rows="4"></textarea>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <!-- right sidebar input fields -->
+                    <div class="col-5">
+
+                            <div class="form-group row">
+                              <label for="food_img" class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control-file" id="food_img">
+                                </div>
+                            </div>
+
+                            <div class="bg-lightgrey pt-3 px-3 pb-0 rounded border border-light">
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                      <legend class="col-form-label col-sm-2 pt-0">Item Status</legend>
+                                      <div class="col-sm-10">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                          <label class="form-check-label" for="gridRadios1">
+                                            Available
+                                          </label>
+                                        </div>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                          <label class="form-check-label" for="gridRadios2">
+                                            Unavailable
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                            </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Food Symbols accordion -->
+    <div class="accordion mb-4" id="accordion_symbols">
+
+        <div class="card">
+            <div class="card-header pl-0 d-flex bg-666" id="headingOne">
+                <div class="mr-auto">
+                    <h5 class="mb-0">
+                    <button class="btn btn-link py-0" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-white text-capitalize">Food Warnings</span>
+                    </button>
+                    </h5>
+                </div>
+                <div class="font-weight-bold">
+                    <button class="btn btn-link bg-transparent text-white font-weight-bold py-0 px-3" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-white">+</span>
+                    </button>
+                </div>    
+            </div>
+        
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_symbols">
+                <div class="card-body row">
+                    
+                    <div class="col-3">
+                        <fieldset class="form-group">
+                                <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="gridRadios1">
+                                    Vegetarian
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                    <label class="form-check-label" for="gridRadios2">
+                                    May contain nuts
+                                    </label>
+                                </div>
+                                </div>
+                            </fieldset>
+                    </div>
+                    <div class="col-3">
+                        <fieldset class="form-group">
+                                <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="gridRadios1">
+                                    Spicy
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                    <label class="form-check-label" for="gridRadios2">
+                                    Very Spicy
+                                    </label>
+                                </div>
+                                </div>
+                            </fieldset>
+                    </div>
+                    <div class="col-3">
+                        <fieldset class="form-group">
+                                <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="gridRadios1">
+                                    Gluten-free
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                    <label class="form-check-label" for="gridRadios2">
+                                    Contains Beef
+                                    </label>
+                                </div>
+                                </div>
+                            </fieldset>
+                    </div>
+                    <div class="col-3">
+                        <fieldset class="form-group">
+                                <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="gridRadios1">
+                                    Contains Pork
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                    <label class="form-check-label" for="gridRadios2">
+                                    Contains Fish
+                                    </label>
+                                </div>
+                                </div>
+                            </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Item Variants accordion -->
+    <div class="accordion mb-4" id="accordion_variants">
+
+        <div class="card">
+            <div class="card-header pl-0 d-flex bg-666" id="headingOne">
+                <div class="mr-auto">
+                    <h5 class="mb-0">
+                    <button class="btn btn-link py-0" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <span class="text-white text-capitalize">Item Variants</span>
+                    </button>
+                    </h5>
+                </div>
+                <div class="font-weight-bold">
+                    <button class="btn btn-link bg-transparent text-white font-weight-bold py-0 px-3" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <span class="text-white">+</span>
+                    </button>
+                </div>    
+            </div>
+        
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_variants">
+                <div class="card-body">
+                    
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">This product has multiple variances, like different sizes or different doneness levels</label>
+                      </div>
+
+                      <!-- if box checked, show this div and its checked values -->
+                      <div class="d-none" id="variance_list_container">
+                        <hr />
+                        <p class="font-weight-bold text-capitalize small mb-0">variances</p>
+
+                            <!-- list all variants here -->
+                            <table class="table mb-0 table-hover">
+                                <thead>
+                                  <tr>
+                                    <th scope="col"><small class="text-muted text-capitalize">variant category</small></th>
+                                    <th scope="col"><small class="text-muted text-capitalize">options</small></th>
+                                    <th scope="col"><small class="text-muted text-capitalize">price difference</small></th>
+                                    <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>variant</td>
+                                    <td>option</td>
+                                    <td>price_diff</td>
+                                    <td class="text-right"><button class="btn btn-sm btn-danger text-capitalize font-weight-normal text-white">delete</button></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                         
+
+
+
+                        <button type="button" data-toggle="modal" data-target="#addVarModal" class="btn rounded btn-primary mt-0 text-white btn-sm text-capitalize">add a variant</button> 
+                        <hr />
+
+                        <!-- add VARient modal -->
+                        <div class="modal fade" id="addVarModal">
+                            <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h5 class="modal-title text-capitalize">add a varient</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <div class="form-row mb-3 px-1">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <input type="text" id="variant_category" placeholder="Varient Category, like size or doneness level" class="form-control" aria-label="Text input with dropdown button">
+                                                <div class="input-group-append">
+                                                  <button class="btn m-0 py-2 px-3 btn-light text-darker shadow-none dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    
+                                                  <div class="dropdown-menu">
+                                                      <!-- each <a> to load existing variant category optionss, onclick to fill input field id="" -->
+                                                    <a class="dropdown-item" href="#">category</a>
+                                                  </div>
+                                                </div>
+                                              </div>                                        </div>
+                                      </div>
+
+                                </div>
+                                
+                                <!-- Modal footer -->
+                                <div class="modal-footer py-2 bg-lightgrey">
+                                <button type="button" class="btn btn-sm btn-primary">save varient</button>
+                                </div>
+                                
+                            </div>
+                            </div>
+                        </div>
+
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>   
+
+
+<!-- delete button -->
+<hr />
+<div class="mb-5">
+<button type="button" class="btn shadow-none mb-5 btn-lg px-2 py-2 btn-transparent text-danger text-capitalize">delete item</button>
+</div>
+</div>
+
+<!-- footer -->
+<footer type="footer" class="d-flex bg-lightgrey mx-100 p-2 fixed-bottom border-top border-light">
+    <div class="mr-auto"><button onclick="menuHTML()" class="text-capitalize btn btn-light py-2 shadow-sm Border border-light rounded">Cancel</button></div>
+    <div><button type="button" class="text-capitalize btn btn-light py-2 shadow-sm border border-light rounded">Duplicate</button></div> <!-- save new record with same values -->
+    <div><button class="btn btn-success text-white py-2 text-capitalize border border-light rounded shadow">update</button></div><!-- update record -->
+</footer> 
+
+    <!-- validation for forms inside the modals -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="css/mdb/js/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="css/mdb/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="css/mdb/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="css/mdb/js/mdb.min.js"></script>
+    <!-- Modal Template -->
+    <script src="css/mdb/css/modals/bootstrap-fs-modal-master/dist/js/fs-modal.min.js"></script>
+    <script src="scripts/common.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+CREATE TABLE IF NOT EXISTS Role (
+    roleID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    role VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Location (
+    locationID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    location_name VARCHAR(20) NOT NULL
+    Address VARCHAR(200),
+    ContactNumber INT(8)
+);
+
+CREATE TABLE IF NOT EXISTS Users (
+    userID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50) NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    locationID INT(8) UNSIGNED,
+    roleID INT(8) UNSIGNED,
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (roleID) REFERENCES Role(roleID),
+    FOREIGN KEY (locationID) REFERENCES Location(locationID)
+);
+
+CREATE TABLE IF NOT EXISTS Item_Discounts (
+    Item_DiscountsID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    date_and_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_active BOOLEAN NOT NULL,
+    discount_rate_type VARCHAR(20) NOT NULL,
+    discount_rate INT(8) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Menu_Category (
+    categoryID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Food (
+    foodID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    food_name VARCHAR(20) NOT NULL,
+    price FLOAT NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    food_image BLOB,
+    status VARCHAR(20) NOT NULL,
+    categoryID INT(8) UNSIGNED,
+    CONSTRAINT status_val CHECK (status = 'Open' OR status = 'Close'),
+    FOREIGN KEY (categoryID) REFERENCES Menu_Category(categoryID)
+);
+
+CREATE TABLE IF NOT EXISTS Item_Discounts_Details (
+    Item_DiscountsID INT(8) UNSIGNED,
+    foodID INT(8) UNSIGNED,
+    FOREIGN KEY (foodID) REFERENCES Food (foodID),
+    FOREIGN KEY (Item_DiscountsID) REFERENCES Item_Discounts (Item_DiscountsID)
+);
+
+CREATE TABLE IF NOT EXISTS Food_Warning (
+    warningID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    warning VARCHAR (20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Location_Availability (
+    foodID INT(8) UNSIGNED,
+    locationID INT(8) UNSIGNED,
+    FOREIGN KEY (foodID) REFERENCES Food (foodID),
+    FOREIGN KEY (locationID) REFERENCES Location (locationID)
+);
+
+CREATE TABLE IF NOT EXISTS Food_Warning_Detail (
+    foodID INT(8) UNSIGNED,
+    warningID INT(8) UNSIGNED,
+    PRIMARY KEY (foodID,warningID),
+    FOREIGN KEY (warningID) REFERENCES Food_Warning (warningID),
+    FOREIGN KEY (foodID) REFERENCES Food (foodID)
+);
+
+CREATE TABLE IF NOT EXISTS Variance_Category (
+    varianceID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    variance_name VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Food_Variances (
+    foodID INT(8) UNSIGNED NOT NULL,
+    varianceID INT(8) UNSIGNED NOT NULL,
+    PRIMARY KEY (varianceID,foodID),
+    FOREIGN KEY (varianceID) REFERENCES Variance_Category(varianceID),
+    FOREIGN KEY (foodID) REFERENCES Food(foodID)
+);
+
+CREATE TABLE IF NOT EXISTS Order_Cancellation_Reasons (
+    reasonID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    reason VARCHAR(200),
+    is_active BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS Payment_Type (
+    paymentID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    payment VARCHAR(200) NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS Order_Discounts (
+    order_discountID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE,
+    discount_rate_type VARCHAR(20) NOT NULL,
+    discount_rate INT(8) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Orders (
+    orderID  INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    locationID INT (8) UNSIGNED NOT NULL,
+    subtotal FLOAT NOT NULL,
+    order_discountID INT(8) UNSIGNED NOT NULL,
+    discount_expense INT(8),
+    tax INT(8) NOT NULL,
+    total INT(8) NOT NULL,
+    Date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    isCancelled BOOLEAN DEFAULT FALSE,
+    reasonID INT(8) UNSIGNED,
+    paymentID INT(8) UNSIGNED,
+    AdditionalNotes VARCHAR(200),
+    FOREIGN KEY (locationID) REFERENCES Location (locationID),
+    FOREIGN KEY (order_discountID) REFERENCES Order_Discounts (order_discountID),
+    FOREIGN KEY (reasonID) REFERENCES Order_Cancellation_Reasons (reasonID),
+    FOREIGN KEY (paymentID) REFERENCES Payment_Type (paymentID)
+);
+
+-- might need to check out the variance
+
+CREATE TABLE IF NOT EXISTS Ordered_Items(
+    foodID INT(8) UNSIGNED NOT NULL,
+    orderID INT(8) UNSIGNED NOT NULL,
+    Quantity INT(8) NOT NULL,
+    Price FLOAT NOT NULL,
+    Variance VARCHAR(200),
+    PRIMARY KEY(orderID,foodID),
+    FOREIGN KEY (orderID) REFERENCES Orders(orderID),
+    FOREIGN KEY (foodID) REFERENCES Food(foodID)
+);
+
+
+INSERT INTO Role (role)
+VALUES ('customer');
+
+INSERT INTO Location (location_name, Address, ContactNumber)
+VALUES ('Boon Lay Place', '221 Boon Lay Place', 90438484);
+
+INSERT INTO Payment_Type (payment, is_active)
+VALUES ('Cash', TRUE);
+
+INSERT INTO Payment_Type (payment, is_active)
+VALUES ('Visa', TRUE);
+
+INSERT INTO Payment_Type (payment, is_active)
+VALUES ('MasterCard', FALSE);
