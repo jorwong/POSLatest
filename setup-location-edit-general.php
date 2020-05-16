@@ -1,5 +1,5 @@
 <?php
-include 'Adding.php';
+include 'CRUD.php';
 if($_SERVER["REQUEST_METHOD"]=="POST"){
   editLocation($_POST["title"],$_POST["address"],$_POST["contact"],$_POST["prevlocation"]);
 };

@@ -1,5 +1,5 @@
 <?php
-  include 'Adding.php';
+  include 'CRUD.php';
   if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["ReasonName"])){
     addReason($_POST["ReasonName"]);
   }
@@ -93,32 +93,34 @@
             while ($row=mysqli_fetch_array($result_select)){
               $rows[]=$row;
             }
-
-            foreach ($rows as $stmt){
-              echo ('<tr>
-                <td>'.$stmt['reason'].'</td>
-                <td> 
-                    <form action setup-globalSettings-orderCancel.php method="POST">
-                      <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="'.$stmt['reasonID'].'" value="'.$stmt['reasonID'].'"
-                        '.($stmt['is_active']== 1 ? "checked" : "").' name="chk[]" onclick="save_checkbox('.$stmt['reasonID'].')">
-                        <label class="custom-control-label" for="'.$stmt['reasonID'].'"></label>
-                      </div>
-                    
-                  </td>
-            <td class="text-right">
-                <button type="button" class="btn btn-sm btn-danger text-white" onclick="delete_button('.$stmt['reasonID'].')">
-                    delete
-                </button>
-                </form >
-            </td>
-          </tr>');
-            };
+            if (empty($rows)){
+              echo('<tr>
+              <div class="mx-auto bg-lightgrey text-darker text-center text-capitalize py-3">no order cancellation reasons added yet.</div>
+            </tr> ');
+            }
+            else{
+              foreach ($rows as $stmt){
+                echo ('<tr>
+                  <td>'.$stmt['reason'].'</td>
+                  <td> 
+                      <form action setup-globalSettings-orderCancel.php method="POST">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="'.$stmt['reasonID'].'" value="'.$stmt['reasonID'].'"
+                          '.($stmt['is_active']== 1 ? "checked" : "").' name="chk[]" onclick="save_checkbox('.$stmt['reasonID'].')">
+                          <label class="custom-control-label" for="'.$stmt['reasonID'].'"></label>
+                        </div>
+                      
+                    </td>
+              <td class="text-right">
+                  <button type="button" class="btn btn-sm btn-danger text-white" onclick="delete_button('.$stmt['reasonID'].')">
+                      delete
+                  </button>
+                  </form >
+              </td>
+            </tr>');
+              };
+            }
           ?>
-          <!-- if no order discounts -->
-          <!-- <tr>
-            <div class="mx-auto bg-lightgrey text-darker text-center text-capitalize py-3">no order cancellation reasons added yet.</div>
-          </tr> -->
 
         </tbody>
     </table>

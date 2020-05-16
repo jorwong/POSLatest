@@ -1,5 +1,5 @@
 <?php
-  include 'Adding.php';
+  include 'CRUD.php';
   if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["name"])){
     addLocation($_POST["name"],$_POST['address'],$_POST["contact"]);
   }

@@ -1,5 +1,5 @@
 <?php session_start(); 
-    include 'Adding.php';
+    include 'CRUD.php';
     if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["CHGcategory"])){
         editVariant($_POST["CHGcategory"],$_SESSION["prevVarCat"]);
     }

@@ -1,5 +1,5 @@
 <?php
-    include 'Adding.php';
+    include 'CRUD.php';
     echo $_POST["Food_warning_name"];
     if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["Food_warning_name"]!=NULL)
     {

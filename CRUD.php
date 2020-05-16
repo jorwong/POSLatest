@@ -67,6 +67,7 @@
     function addReason($ReasonName){
         include "mysql.php";
         if ($ReasonName!=NULL){
+            
             $sql='INSERT INTO Order_Cancellation_Reasons (reason, is_active) VALUES ( ? , TRUE )';
             if($stmt=mysqli_prepare($conn,$sql))
             {
@@ -81,7 +82,7 @@
                     echo mysqli_stmt_error($stmt);
                 }
             }
-        };
+        }
     }
 
     function addLocation($LocationName, $address, $Contact){
