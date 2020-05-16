@@ -38,7 +38,7 @@ window.location.href="setup-globalSettings-modifier.php"
     }
 
     function superPass() {
-        window.location.href="setup-globalSettings-superPass.html"
+        window.location.href="setup-globalSettings-superPass.php"
         
     }
 

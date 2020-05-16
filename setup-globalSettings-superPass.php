@@ -1,3 +1,29 @@
+<?php
+session_start();
+include "mysql.php";
+if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["password"])){
+    $sql="SELECT * FROM SupervisorPassword";
+    if($stmt=$conn->prepare($sql)){
+        $stmt->execute();
+        $stmt->bind_result($passID,$password);
+        $stmt->fetch();
+        if ($password==$_POST["password"]){
+            $_SESSION['SupervisorPassword'] = $password;
+            echo "<script type='text/javascript'>alert('Correct Password, Now you can Cancel or Change an Order');</script>";
+        }
+        else{
+            echo "<script type='text/javascript'>alert('Wrong Password');</script>";
+        }
+    }
+
+    
+
+
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,47 +55,7 @@
 <body class="bg-fadedpurple all-align-center">
 
 <!-- navbar -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark py-0">
-
-    <!-- button for mobile -->
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="collapse_target">
-        <!-- nav branding -->
-        <a class="navbar-brand text-primary" href="home.html">Tink's Bistro</a>
-
-        <!-- nav links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="home.html">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pos.html">POS</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">CRM</a>
-            </li>
-        </ul>
-
-        <!-- dropdown -->
-        <div class="dropdown">
-            <button type="button" class="btn py-2 px-3 btn-light dropdown-toggle" data-toggle="dropdown">
-              Settings
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="setup.html">Setup</a>
-              <a class="dropdown-item" href="profile.html">Profile</a>
-              <a class="dropdown-item" href="#">Tour</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" id="btnLogout">Logout</a>
-            </div>
-          </div>
-
-    </div>
-
-</nav>
+<?php include "navbar.php" ?>
 
 <!-- breadcrumb -->  
 <nav aria-label="breadcrumb">
@@ -91,10 +77,10 @@
 
     <!-- change password -->
     <div class="jumbotron">
-        <form action="/action_page.php">
+        <form action="setup-globalSettings-superPass.php" method="POST">
             <div class="form-group">
               <label for="pwd">Supervisor Password to Cancel or Change an Order:</label>
-              <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+              <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password">
             </div>
             <button type="submit" class="btn btn-success text-white btn-sm">Save</button>
           </form>

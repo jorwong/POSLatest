@@ -140,6 +140,13 @@ CREATE TABLE IF NOT EXISTS Ordered_Items(
     FOREIGN KEY (foodID) REFERENCES Food(foodID)
 );
 
+CREATE TABLE IF NOT EXISTS SupervisorPassword(
+    passID INT(8) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    SupervisorPassword VARCHAR(200) NOT NULL
+);
+
+INSERT INTO SupervisorPassword(passID,SupervisorPassword)
+VALUES (1,'PasswordSupervisor123');
 
 INSERT INTO Role (role)
 VALUES ('customer');

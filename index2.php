@@ -115,7 +115,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <h5>Welcome back!</h5>
       <p>Enter Your Details Below.</p>
     <!-- form starts here -->
-    <form action index2.php method="POST">
+    <form action <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="POST">
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="Email">
