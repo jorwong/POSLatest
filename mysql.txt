@@ -108,13 +108,22 @@ CREATE TABLE IF NOT EXISTS Order_Discounts (
     discount_rate INT(8) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS TaxRates(
+    taxID INT(8) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    taxName VARCHAR(200) NOT NULL,
+    TaxRate INT(2) NOT NULL,
+    isDefault BOOLEAN DEFAULT FALSE,
+    locationID INT(8) UNSIGNED NOT NULL,
+    FOREIGN KEY (locationID) REFERENCES Location (locationID)
+);
+
 CREATE TABLE IF NOT EXISTS Orders (
     orderID  INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     locationID INT (8) UNSIGNED NOT NULL,
     subtotal FLOAT NOT NULL,
     order_discountID INT(8) UNSIGNED NOT NULL,
     discount_expense INT(8),
-    tax INT(8) NOT NULL,
+    taxID INT(8) NOT NULL,
     total INT(8) NOT NULL,
     Date DATETIME DEFAULT CURRENT_TIMESTAMP,
     isCancelled BOOLEAN DEFAULT FALSE,
@@ -124,7 +133,8 @@ CREATE TABLE IF NOT EXISTS Orders (
     FOREIGN KEY (locationID) REFERENCES Location (locationID),
     FOREIGN KEY (order_discountID) REFERENCES Order_Discounts (order_discountID),
     FOREIGN KEY (reasonID) REFERENCES Order_Cancellation_Reasons (reasonID),
-    FOREIGN KEY (paymentID) REFERENCES Payment_Type (paymentID)
+    FOREIGN KEY (paymentID) REFERENCES Payment_Type (paymentID),
+    FOREIGN KEY (taxID) REFERENCES TaxRates(taxID)
 );
 
 -- might need to check out the variance
@@ -145,6 +155,8 @@ CREATE TABLE IF NOT EXISTS SupervisorPassword(
     SupervisorPassword VARCHAR(200) NOT NULL
 );
 
+
+
 INSERT INTO SupervisorPassword(passID,SupervisorPassword)
 VALUES (1,'PasswordSupervisor123');
 
@@ -162,3 +174,6 @@ VALUES ('Visa', TRUE);
 
 INSERT INTO Payment_Type (payment, is_active)
 VALUES ('MasterCard', FALSE);
+
+INSERT INTO TaxRates (taxName,TaxRate,isDefault,locationID)
+VALUES ('GST',7,1,1)

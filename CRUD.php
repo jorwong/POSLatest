@@ -126,5 +126,42 @@
         }
     }
 
+    function editLocationtax($taxname,$taxrate,$id){
+        require_once "mysql.php";
+        if ($taxname!=NULL){
+            $sql='UPDATE TaxRates SET taxName= ? , TaxRate= ? WHERE taxID= ?';
+            if($stmt=mysqli_prepare($conn,$sql)){
+                mysqli_stmt_bind_param($stmt,'sii',$setName,$setRate,$setID);
+                $setName=$taxname;
+                $setRate=$taxrate;
+                $setID=$id;
+                if (mysqli_stmt_execute($stmt)){
+                    header("Refresh:0");
+                }
+                $stmt->close();
+            }
+        }
+    }
+
+    function addLocationtax($tax_name,$tax_rate,$LocationName){
+        include "mysql.php";
+        if ($tax_name!=NULL){
+            $sql='INSERT INTO TaxRates (taxName,TaxRate,locationID) VALUES ( ? , ? , (SELECT locationID FROM Location WHERE location_name = ?) )';
+            if($stmt=mysqli_prepare($conn,$sql))
+            {
+                mysqli_stmt_bind_param($stmt,'sis',$tax_name,$tax_rate,$LocationName);
+            
+                if (mysqli_stmt_execute($stmt))
+                {
+                    header("Refresh:0");
+                }
+                else
+                {
+                    echo mysqli_stmt_error($stmt);
+                }
+            }
+        };
+    };
+
 
 ?>

@@ -65,7 +65,7 @@ include "navbar.php";
             </button>        
         </div>
         <div class="col-3">
-            <button class="btn btn-block shadow-none border border-silver bg-transparent text-capitalize rounded m-0 p-4" onclick="taxHTML()">
+            <button class="btn btn-block shadow-none border border-silver bg-transparent text-capitalize rounded m-0 p-4" onclick="taxHTML('<?php echo $_GET['location_name']?>')">
                 <i class="fas fa-calculator mb-3 text-darker size-350"></i>
                 <br />
                 Tax Rates

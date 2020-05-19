@@ -1,3 +1,13 @@
+<?php 
+include 'CRUD.php';
+if ($_SERVER['REQUEST_METHOD']=="POST"){
+    editLocationtax($_POST["tax_name"],$_POST["tax_rate"],$_POST["taxId"]);
+}
+if ($_SERVER['REQUEST_METHOD']=="POST"){
+  addLocationtax($_POST["tax_name"],$_POST["tax_rate"],$_POST["locationName"]);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,55 +39,15 @@
 <body class="bg-fadedpurple all-align-center">
 
 <!-- navbar -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark py-0">
-
-    <!-- button for mobile -->
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="collapse_target">
-        <!-- nav branding -->
-        <a class="navbar-brand text-primary" href="home.html">Tink's Bistro</a>
-
-        <!-- nav links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="home.html">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pos.html">POS</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">CRM</a>
-            </li>
-        </ul>
-
-        <!-- dropdown -->
-        <div class="dropdown">
-            <button type="button" class="btn py-2 px-3 btn-light dropdown-toggle" data-toggle="dropdown">
-              Settings
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="setup.html">Setup</a>
-              <a class="dropdown-item" href="profile.html">Profile</a>
-              <a class="dropdown-item" href="#">Tour</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" id="btnLogout">Logout</a>
-            </div>
-          </div>
-
-    </div>
-
-</nav>
+<?php include "navbar.php" ?>
 
 <!-- breadcrumb -->  
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item small"><a href="home.html">home</a></li>
       <li class="breadcrumb-item small"><a href="setup.html">Setup</a></li>
-      <li class="breadcrumb-item small"><a href="setup-location.html">Location</a></li>
-      <li class="breadcrumb-item small"><a href="#">location_name</a></li>
+      <li class="breadcrumb-item small"><a href="setup-location.php">Location</a></li>
+      <li class="breadcrumb-item small"><a href="#"><?php echo $_GET["location_name"]?></a></li>
       <li class="breadcrumb-item small active" aria-current="page">Tax Rates</li>
     </ol>
   </nav>
@@ -103,37 +73,53 @@
         </thead>
         <tbody>
 
-          <!-- list each tax by row -->
-          <tr>
-            <td>tax_name</td>
-            <td>tax_rate</td>
-            <td>
-            <!-- toggle box -->
-                <form>
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="switch1">
-                  <label class="custom-control-label" for="switch1"></label>
-                </div>
-              </form>
-            </td>
-            <td class="text-right">
-                <button type="button" data-toggle="modal" data-target="#editTaxModal" class="btn w-50 btn-sm btn-success text-white">
-                    Edit tax
-                </button>
-                    <br />
-                <button type="button" class="btn w-50 btn-sm btn-danger text-white">
-                    delete
-                </button>
-            </td>
-          </tr>
+        <?php
+          require_once "mysql.php";
+          $sql="SELECT * FROM TaxRates INNER JOIN Location ON Location.locationID = TaxRates.locationID WHERE location_name= '".$_GET["location_name"]."'";
+            $result_select=mysqli_query($conn,$sql) or die(mysqli_error($conn));
+            $rows=array();
+            while ($row=mysqli_fetch_array($result_select)){
+              $rows[]=$row;
+            }
+            if (empty($rows)){
+              echo ('<!-- if no taxes added  -->
+              <div class="bg-lightgrey py-3 shadow-none border border-light mt-3 text-center">
+                  <h6 class="m-0 text-capitalize text-darker font-weight-bold">No Taxes Added Yet!</h6> 
+          
+              </div>');
+            }
+            else {
+              foreach ($rows as $stmt){
+                echo ('<!-- list each tax by row -->
+                <tr>
+                  <td>'.$stmt['taxName'].'</td>
+                  <td>'.$stmt['TaxRate'].'</td>
+                  <td>
+                  <!-- toggle box -->
+                      <form>
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="'.$stmt['taxID'].'" '.($stmt['isDefault']== 1 ? "checked" : "").' name="chk[]" onclick="save_checkbox('.$stmt['taxID'].')">
+                        <label class="custom-control-label" for="'.$stmt['taxID'].'"></label>
+                      </div>
+                    </form>
+                  </td>
+                  <td class="text-right">
+                      <button type="button" data-toggle="modal" data-target="#editTaxModal" class="btn w-50 btn-sm btn-success text-white" data-id="'.$stmt['taxID'].'">
+                          Edit tax
+                      </button>
+                          <br />
+                      <button type="button" class="btn w-50 btn-sm btn-danger text-white" onclick="delete_button('.$stmt['taxID'].')">
+                          delete
+                      </button>
+                  </td>
+                </tr>');
+              }
+            }
+
+        ?>
+          
         </tbody>
     </table>
-
-    <!-- if no taxes added  -->
-    <div class="bg-lightgrey py-3 shadow-none border border-light mt-3 text-center">
-        <h6 class="m-0 text-capitalize text-darker font-weight-bold">No Taxes Added Yet!</h6> 
-
-    </div>
 
 </div>
 
@@ -152,8 +138,7 @@
           <!-- Modal body -->
           <div class="modal-body">
               
-              <form>
-
+              <form action setup-location-edit-tax.php method="POST">
                   <div class="form-row">
                       <div class="col">
                       <input type="text" class="form-control" id="tax_name" placeholder="Name" name="tax_name" />
@@ -163,23 +148,18 @@
                   <div class="form-row">
                     <div class="col">
                     <input type="number" class="form-control" id="tax_rate" placeholder="Rate (%)" name="tax_rate" />
+                    <input type="hidden" id="locationName" name="locationName" value="<?php echo $_GET['location_name'] ?>">
+
                     </div>
                 </div>
                 <br />
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label text-capitalize" for="defaultCheck1">
-                          default tax
-                        </label>
-                      </div>
+          <!-- Modal footer -->
+                  <div class="modal-footer py-2 bg-lightgrey">
+                    <button type="submit" class="btn btn-sm btn-success">save tax</button>
+                  </div>
 
                 </form>
 
-          </div>
-          
-          <!-- Modal footer -->
-          <div class="modal-footer py-2 bg-lightgrey">
-          <button type="button" class="btn btn-sm btn-success">save tax</button>
           </div>
           
       </div>
@@ -199,9 +179,7 @@
       
       <!-- Modal body -->
       <div class="modal-body">
-          
               <form>
-
                   <div class="form-row">
                       <div class="col">
                       <input type="text" class="form-control" id="tax_name" placeholder="Name" name="tax_name" />
@@ -220,13 +198,12 @@
                           default tax
                         </label>
                       </div>
+                      <!-- Modal footer -->
+                    <div class="modal-footer py-2 bg-lightgrey">
+                    <button type="submit" class="btn btn-sm btn-success">save discount</button>
+                    </div>
                 </form>
 
-      </div>
-      
-      <!-- Modal footer -->
-      <div class="modal-footer py-2 bg-lightgrey">
-      <button type="button" class="btn btn-sm btn-success">save discount</button>
       </div>
       
   </div>
@@ -245,6 +222,52 @@
     <script type="text/javascript" src="css/mdb/js/mdb.min.js"></script>
     <!-- Modal Template -->
     <script src="css/mdb/css/modals/bootstrap-fs-modal-master/dist/js/fs-modal.min.js"></script>
+
+    <script>
+      function save_checkbox(tax_id){
+        $.ajax({
+          url: 'location-edit.php',
+          type: "POST",
+          data: {'id': tax_id,'func': "SaveChck"},
+          success: function(response){
+            alert(response);
+          }
+        });
+      }
+    </script>
+    <script>
+      function delete_button(tax_id){
+        $.ajax({
+          url: 'location-edit.php',
+          type: "POST",
+          data: {'id': tax_id,'func': "Delete"},
+          success: function(response){
+            location.reload();
+          }
+        });
+      }
+      </script>
+      <script>
+      $(document).ready(function(){
+
+        $('button.btn.w-50.btn-sm.btn-success.text-white.waves-effect.waves-light').click(function() {
+
+        var taxid = $(this).data("id");
+        // AJAX request
+        $.ajax({
+        url: 'locationedit.php',
+        type: 'POST',
+        data: 'taxid='+ taxid,
+        success: function(response){ 
+            // Add response in Modal body
+            $('.modal-body').html(response);
+            // Display Modal
+            $('#editModifierModal').modal('show'); 
+        }
+        });
+       });
+    });
+      </script>
 
 </body>
 

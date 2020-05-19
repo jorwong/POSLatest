@@ -46,8 +46,8 @@ window.location.href="setup-globalSettings-modifier.php"
         window.location.href="setup-menu-addItem.html"
     }
 
-    function taxHTML() {
-        window.location.href="setup-location-edit-tax.html"
+    function taxHTML(locationName) {
+        window.location.href="setup-location-edit-tax.php?location_name="+locationName
     }
     
 

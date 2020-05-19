@@ -35,6 +35,15 @@
 
 <?php include "navbar.php" ?>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item small"><a href="home.html">home</a></li>
+      <li class="breadcrumb-item small"><a href="setup.html">Setup</a></li>
+      <li class="breadcrumb-item small"><a href="setup-globalSettings.html">Global Settings</a></li>
+      <li class="breadcrumb-item small active" aria-current="page">Order Cancellation Reasons</li>
+    </ol>
+  </nav>
+
 <div class="container">
 
     <!-- header -->

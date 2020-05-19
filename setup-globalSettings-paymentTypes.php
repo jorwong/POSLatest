@@ -38,6 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkbox']))
 <!-- navbar -->
 <?php include "navbar.php" ?>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item small"><a href="home.html">home</a></li>
+      <li class="breadcrumb-item small"><a href="setup.html">Setup</a></li>
+      <li class="breadcrumb-item small"><a href="setup-globalSettings.html">Global Settings</a></li>
+      <li class="breadcrumb-item small active" aria-current="page">Payment Types</li>
+    </ol>
+  </nav>
+
 
 <div class="container">
 
