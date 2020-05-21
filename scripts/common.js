@@ -1,5 +1,5 @@
 function menuHTML() {
-    window.location.href = "setup-menu.html"
+    window.location.href = "setup-menu.php"
 }
 
 function locationHTML() {
@@ -43,7 +43,7 @@ window.location.href="setup-globalSettings-modifier.php"
     }
 
     function menuItem() {
-        window.location.href="setup-menu-addItem.html"
+        window.location.href="setup-menu-addItem.php"
     }
 
     function taxHTML(locationName) {
